@@ -25,13 +25,13 @@ class MyStreamListener(tweepy.StreamListener):
     self.add_to_file(data)
 
   def add_to_file(self,tweet):
-    data_dir = 'raw_data/'
+    data_dir = 'raw_data_3/'
     file_name = tweet['id']
     if not os.path.isdir(data_dir):
       os.mkdir(data_dir)
     with open(data_dir+str(file_name), 'a') as f:
       f.write(json.dumps(tweet)+"\n")
-    print('data added to thegit file')
+    print('data dumped')
 
 
   def on_error(self, status):
@@ -42,4 +42,4 @@ class MyStreamListener(tweepy.StreamListener):
 
 myStreamListener =  MyStreamListener()
 myStream = tweepy.Stream(auth = api.auth, listener=myStreamListener, tweet_mode="extended_tweet")
-myStream.filter(track=['python'])
+myStream.filter(track=['covid'], languages=['en'])
