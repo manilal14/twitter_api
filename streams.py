@@ -20,7 +20,7 @@ class MyStreamListener(tweepy.StreamListener):
 
   
   def add_to_file(self,tweet):
-    data_dir = 'raw_data_5/'
+    data_dir = 'raw_data_6/'
     file_name = tweet['id']
     if not os.path.isdir(data_dir):
       os.mkdir(data_dir)
@@ -29,11 +29,13 @@ class MyStreamListener(tweepy.StreamListener):
     print('data dumped')
 
 
-  def on_error(self, status):
-    print("Error "+str(status))
-    if status == 420:
+  def on_error(self, err_code):
+    print("Error "+str(err_code))
+    if err_code == 420:
+      print("Limit Exceeded")
       return False
-    return True
+    else:
+      return True
 
 
 if __name__ == '__main__':
@@ -45,4 +47,4 @@ if __name__ == '__main__':
 
   myStreamListener =  MyStreamListener()
   myStream = tweepy.Stream(auth = api.auth, listener=myStreamListener, tweet_mode="extended")
-  myStream.filter(track=['india'], languages=['en'])
+  myStream.filter(track=['covid'], languages=["en"])
